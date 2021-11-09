@@ -1,16 +1,22 @@
-- hosts: localhost
-  gather_facts: False
-
-  vars:
-   - MyMessage: "Welcome to Ansible world!"
-
-  pre_tasks:
-  - name: install python 3
-    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-
+ name: Configure webserver with nginx
+  hosts: localhost
+  become: True
   tasks:
-   - name: Nginx setup
-     apt: pkg=nginx state=present update_cache=true
-   - name: index.html copy
-     template: src=index.html.j2 dest=/usr/share/nginx/html/index.html
-...
+    - name: install nginx
+      apt: name=nginx update_cache=yes
+
+    - name: copy nginx config file
+      copy: src=files/nginx.conf dest=/etc/nginx/sites-available/default
+
+    - name: enable configuration
+      file: >
+        dest=/etc/nginx/sites-enabled/default
+        src=/etc/nginx/sites-available/default
+        state=link
+
+    - name: copy index.html
+      template: src=templates/index.html.j2 dest=/usr/share/nginx/html/index.html
+        mode=0644
+
+    - name: restart nginx
+      service: name=nginx state=restarted
