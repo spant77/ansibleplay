@@ -19,7 +19,7 @@
     - name: install NPM
       shell: npm i
       args:
-           chdir: /home/ubuntu
+           chdir: /home/spant
 
     - name: Install PM2
       npm:
