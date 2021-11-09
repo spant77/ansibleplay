@@ -1,4 +1,4 @@
-- hosts: 192.168.56.101
+- hosts: localhost
   become: yes
   tasks:
   - name: "apt-get update"
