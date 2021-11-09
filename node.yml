@@ -4,7 +4,7 @@
     - name: Installs nginx web server
       apt: pkg=nginx state=installed update_cache=true
 
-     - name: add apt key for nodesource
+    - name: add apt key for nodesource
       apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
 
     - name: add repo for nodesource
@@ -16,8 +16,8 @@
       apt: name=nodejs
 
     - name: install NPM
-         shell: npm i
-         args:
+      shell: npm i
+      args:
            chdir: /home/ubuntu
 
     - name: Install PM2
