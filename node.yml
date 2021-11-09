@@ -22,10 +22,6 @@
   become: yes
   remote_user: root
 
-  roles:
-    - role: ansible-role-nvm
-      nodejs_version: '10.16.0'
-
 - name: Install Nginx
   hosts: mock
   become: yes
