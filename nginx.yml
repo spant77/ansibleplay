@@ -16,8 +16,8 @@
       path: /var/www/{{ domain }}
       state: directory
       mode: '0775'
-      owner: "{{ spant }}"
-      group: "{{ ansible }}"
+      owner: "root"
+      group: "root"
 
   - name: delete default nginx site
     file:
