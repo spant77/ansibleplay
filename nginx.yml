@@ -1,22 +1,31 @@
- name: Configure webserver with nginx
-  hosts: localhost
-  become: True
+---
+
+- hosts: AppServer
+
+  become: yes
+
   tasks:
-    - name: install nginx
-      apt: name=nginx update_cache=yes
 
-    - name: copy nginx config file
-      copy: src=files/nginx.conf dest=/etc/nginx/sites-available/default
+  - name: Installs nginx web server
 
-    - name: enable configuration
-      file: >
-        dest=/etc/nginx/sites-enabled/default
-        src=/etc/nginx/sites-available/default
-        state=link
+    apt:
 
-    - name: copy index.html
-      template: src=templates/index.html.j2 dest=/usr/share/nginx/html/index.html
-        mode=0644
+      name: nginx
 
-    - name: restart nginx
-      service: name=nginx state=restarted
+      state: present
+
+      update_cache: true
+
+    notify:
+
+    - start nginx
+
+  handlers:
+
+  - name: start nginx
+
+    service:
+
+      name: nginx
+
+      state: present
