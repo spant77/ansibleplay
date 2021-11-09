@@ -1,4 +1,4 @@
-- hosts: web
+- hosts: 192.168.56.101
   become: yes
   tasks:
   - name: "apt-get update"
@@ -16,8 +16,8 @@
       path: /var/www/{{ domain }}
       state: directory
       mode: '0775'
-      owner: "{{ ansible_user }}"
-      group: "{{ ansible_user }}"
+      owner: "{{ spant }}"
+      group: "{{ ansible }}"
 
   - name: delete default nginx site
     file:
