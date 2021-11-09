@@ -1,44 +1,24 @@
----
-- name: Install curl and wget
-  gather_facts: 'no'
-  hosts: localhost
-  become: yes
-  remote_user: root
-
+ hosts: localhost
+  become: true
   tasks:
-    - name: Install curl
-      yum:
-        name: curl
+    - name: install nodejs prerequisites
+      apt:
+        name:
+          - apt-transport-https
+          - gcc
+          - g++
+          - make
         state: present
-
-    - name: Install wget
-      yum:
-        name: wget
+    - name: add nodejs apt key
+      apt_key:
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
         state: present
-
-- name: Create nvm
-  gather_facts: 'no'
-  hosts: localhost
-  become: yes
-  remote_user: root
-
-- name: Install Nginx
-  hosts: localhost
-  become: yes
-  remote_user: root
-
-  tasks:
-    - name: Add epel-release repo
-      yum:
-        name: epel-release
+    - name: add nodejs repository
+      apt_repository:
+        repo: deb https://deb.nodesource.com/node_12.x {{ ansible_lsb.codename }} main
         state: present
-
-    - name: Install Nginx
-      yum:
-        name: nginx
+        update_cache: yes
+    - name: install nodejs
+      apt:
+        name: nodejs
         state: present
-
-    - name: Start NGiNX
-      service:
-        name: nginx
-        state: started
