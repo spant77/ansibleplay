@@ -1,7 +1,7 @@
 ---
 - name: Install curl and wget
   gather_facts: 'no'
-  hosts: mock
+  hosts: localhost
   become: yes
   remote_user: root
 
@@ -18,12 +18,12 @@
 
 - name: Create nvm
   gather_facts: 'no'
-  hosts: mock
+  hosts: localhost
   become: yes
   remote_user: root
 
 - name: Install Nginx
-  hosts: mock
+  hosts: localhost
   become: yes
   remote_user: root
 
